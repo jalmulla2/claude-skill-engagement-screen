@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Northwind Analytics Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #1F4E79;
+    --ink: #1b1f24;
+    --muted: #5b6470;
+    --rule: #d9dde3;
+    --band: #f3f5f8;
+    --go: #1d6b52;
+    --delegate: #8a5d0c;
+    --decline: #a3263b;
+    --serif: "Newsreader", Georgia, "DejaVu Serif", serif;
+    --sans: "Public Sans", Carlito, "DejaVu Sans", Arial, sans-serif;
+    --mono: "IBM Plex Mono", "DejaVu Sans Mono", Menlo, monospace;
+  }
+  @page { size: A4; margin: 14mm 15mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans); font-size: 9.6pt; line-height: 1.38;
+    color: var(--ink); background: #fff;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* Header */
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 12mm;
+           padding-bottom: 3mm; border-bottom: 2.2pt solid var(--accent); }
+  .eyebrow { font-family: var(--mono); font-size: 7.4pt; letter-spacing: .08em; color: var(--accent);
+             text-transform: uppercase; margin-bottom: 1.2mm; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: 19pt; line-height: 1.1; margin: 0; }
+  h1 .person { font-weight: 500; color: var(--muted); }
+  .meta { font-size: 8.2pt; text-align: right; color: var(--muted); line-height: 1.5; white-space: nowrap; }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* Verdict banner */
+  .verdict { display: flex; align-items: center; gap: 4mm; margin: 4mm 0 4.5mm;
+             padding: 3mm 4mm; background: var(--band); border-left: 3pt solid var(--accent); }
+  .pills { display: flex; gap: 1.5mm; flex-shrink: 0; }
+  .pill { font-family: var(--mono); font-weight: 500; font-size: 8.4pt; letter-spacing: .06em; color: #fff;
+          padding: 1.2mm 3mm; border-radius: 10pt; }
+  .pill.go { background: var(--go); } .pill.delegate { background: var(--delegate); } .pill.decline { background: var(--decline); }
+  .verdict-text { flex: 1; }
+  .verdict-text b { display: block; font-size: 10.4pt; }
+  .score { font-family: var(--mono); font-size: 17pt; font-weight: 500; color: var(--accent); flex-shrink: 0; }
+  .score small { font-size: 9pt; color: var(--muted); }
+
+  /* Columns */
+  .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 7mm; }
+  h2 { font-family: var(--mono); font-weight: 500; font-size: 7.4pt; letter-spacing: .1em; text-transform: uppercase;
+       color: var(--accent); margin: 0 0 1.4mm; padding-bottom: .8mm; border-bottom: .6pt solid var(--rule); }
+  section { margin-bottom: 3.6mm; }
+  p { margin: 0; }
+  ul { margin: 0; padding-left: 3.6mm; }
+  li { margin-bottom: .9mm; }
+  li::marker { color: var(--accent); }
+
+  /* Claim tags */
+  .tag { font-family: var(--mono); font-size: 6.2pt; letter-spacing: .04em; padding: .2mm 1.1mm; border-radius: 2pt;
+         vertical-align: 1pt; white-space: nowrap; }
+  .tag.verified { background: #e3f1eb; color: var(--go); }
+  .tag.third { background: #e8ebf0; color: #3f4854; }
+  .tag.self { background: #f7ecd8; color: var(--delegate); }
+
+  /* Score table */
+  table.scores { width: 100%; border-collapse: collapse; }
+  table.scores td { padding: 1.2mm 0; border-bottom: .5pt solid var(--rule); vertical-align: middle; }
+  td.crit { font-weight: 600; font-size: 8.8pt; }
+  td.crit small { display: block; font-weight: 400; font-size: 7.8pt; color: var(--muted); line-height: 1.3; }
+  td.bar { width: 18mm; padding-left: 2mm !important; }
+  td.bar span { display: block; height: 2.2pt; background: var(--accent); border-radius: 1pt; }
+  td.bar { background-image: linear-gradient(var(--rule), var(--rule)); background-size: calc(100% - 2mm) 2.2pt;
+           background-position: right center; background-repeat: no-repeat; }
+  td.num { font-family: var(--mono); font-size: 8.4pt; text-align: right; width: 12mm; }
+
+  /* Meeting prep */
+  .prep { background: var(--band); padding: 3mm 4mm 2.6mm; margin: .5mm 0 3.5mm; }
+  .prep ol { columns: 2; column-gap: 7mm; margin: 0; padding-left: 4.2mm; }
+  .prep li { break-inside: avoid; }
+  .prep li::marker { font-family: var(--mono); font-size: 8pt; }
+  .dont { margin-top: 1.8mm; font-size: 8.8pt; }
+  .dont b { color: var(--decline); }
+
+  /* Footer */
+  footer { border-top: .6pt solid var(--rule); padding-top: 1.6mm; font-family: var(--mono); font-size: 6.6pt;
+           color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="eyebrow">Meeting brief · Head of IT · Vendor meeting</div>
+    <h1>Northwind Analytics: <span class="person">Dana Reyes</span></h1>
+  </div>
+  <div class="meta">
+    <b>Tue 6 Oct 2026 · 10:00</b><br>
+    Goal: Discovery<br>
+    Agenda: None sent<br>
+    Also attending: Sam Okafor (Solutions Architect)
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="pills"><span class="pill delegate">DELEGATE</span></div>
+  <div class="verdict-text"><b>Send the data &amp; analytics lead, not you.</b> Right topic for the reporting refresh, but local delivery and product references are unproven.</div>
+  <div class="score">58<small>/100</small></div>
+</div>
+
+<div class="cols">
+  <div>
+    <section><h2>The ask</h2><ul><li>45-minute intro on their managed analytics platform; no agenda sent.</li><li>Email mentions a &ldquo;free readiness assessment&rdquo; for the reporting refresh <span class="tag self">SELF-CLAIMED</span></li></ul></section>
+    <section><h2>Who they are</h2><ul><li>Data platform consultancy, ~300 staff, HQ abroad; regional office opened 2025 <span class="tag third">THIRD PARTY</span></li><li>Gold-tier partner for the target BI platform <span class="tag verified">VERIFIED</span></li><li>Two named regional clients, neither on this product line <span class="tag self">SELF-CLAIMED</span></li><li>No sanctions, litigation or adverse news found.</li></ul></section>
+    <section><h2>Who's in the room</h2><ul><li><b>Dana Reyes</b>, Regional Director, 14 months in role; previously sales lead at a hardware reseller <span class="tag self">SNIPPET</span></li><li><b>Sam Okafor</b>, Solutions Architect; profile lists a different employer until 2026 <span class="tag self">SNIPPET</span></li></ul></section>
+    <section><h2>History &amp; fit</h2><ul><li>No past contact in notes or mailbox.</li><li>Fits the live <i>Reporting refresh</i> project, discovery stage, decision in Q1.</li><li>Not a likely bidder on any active procurement.</li></ul></section>
+  </div>
+  <div>
+    <section><h2>Score</h2><table class="scores"><tr><td class="crit">Fit<small>Right topic; platform capability unproven</small></td><td class="bar"><span style="width:57%"></span></td><td class="num">20/35</td></tr><tr><td class="crit">Credibility<small>Partner tier verified; references are not</small></td><td class="bar"><span style="width:52%"></span></td><td class="num">13/25</td></tr><tr><td class="crit">Strategic value<small>One of several capable partners</small></td><td class="bar"><span style="width:60%"></span></td><td class="num">15/25</td></tr><tr><td class="crit">Timing<small>Useful before Q1 scoping</small></td><td class="bar"><span style="width:67%"></span></td><td class="num">10/15</td></tr></table></section>
+    <section><h2>Watch-outs</h2><ul><li>Local delivery unclear: regional office may be sales-only.</li><li>&ldquo;Free assessment&rdquo; can become an informal scope that shapes a future tender.</li><li>Architect's employer history doesn't match the company site.</li></ul></section>
+  </div>
+</div>
+
+<section class="prep">
+  <h2>Meeting prep · Discovery</h2>
+  <ol><li>How many delivery staff are based in-region today, and on which projects?</li><li>Name two clients running this product line in production. Can we call them?</li><li>Who would lead delivery, and are they employed or subcontracted?</li><li>What does the readiness assessment produce, and who owns the output?</li><li>Which platform versions and data sources have you migrated before?</li><li>What would a 90-day pilot cost, in outline only?</li></ol>
+  <div class="dont"><b>Don't commit to:</b> a free assessment, a pilot, a follow-up with you, or sharing current architecture documents.</div>
+</section>
+
+<footer>
+  Sources: northwind-analytics.example (about, partners) · BI platform partner directory · regional business news, Mar 2025 · professional-profile search snippets (2)<br>
+  History check: notes ✓ · mailbox ✓ · CRM not configured, not checked
+</footer>
+
+</body>
+</html>

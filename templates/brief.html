@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+  Engagement Screen — one-page A4 brief template.
+
+  Replace every {{placeholder}}. Repeating blocks use these snippets:
+
+  Verdict pill (one per verdict; a split verdict uses two):
+    <span class="pill go">GO</span>
+    <span class="pill delegate">DELEGATE</span>
+    <span class="pill decline">DECLINE</span>
+
+  Bullet (max 4 per section):
+    <li>Text <span class="tag verified">VERIFIED</span></li>
+    Tag classes: verified · third · self (use for SELF-CLAIMED and SNIPPET)
+
+  Score row (one per criterion; width = score / max * 100):
+    <tr><td class="crit">Fit<small>One-line note</small></td>
+        <td class="bar"><span style="width:40%"></span></td>
+        <td class="num">14/35</td></tr>
+
+  Prep question (max 6):
+    <li>Question text</li>
+
+  For a plain Decline, delete the whole <section class="prep"> block.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{company}} Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: {{accent}};
+    --ink: #1b1f24;
+    --muted: #5b6470;
+    --rule: #d9dde3;
+    --band: #f3f5f8;
+    --go: #1d6b52;
+    --delegate: #8a5d0c;
+    --decline: #a3263b;
+    --serif: "Newsreader", Georgia, "DejaVu Serif", serif;
+    --sans: "Public Sans", Carlito, "DejaVu Sans", Arial, sans-serif;
+    --mono: "IBM Plex Mono", "DejaVu Sans Mono", Menlo, monospace;
+  }
+  @page { size: A4; margin: 14mm 15mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans); font-size: 9.6pt; line-height: 1.38;
+    color: var(--ink); background: #fff;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* Header */
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 12mm;
+           padding-bottom: 3mm; border-bottom: 2.2pt solid var(--accent); }
+  .eyebrow { font-family: var(--mono); font-size: 7.4pt; letter-spacing: .08em; color: var(--accent);
+             text-transform: uppercase; margin-bottom: 1.2mm; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: 19pt; line-height: 1.1; margin: 0; }
+  h1 .person { font-weight: 500; color: var(--muted); }
+  .meta { font-size: 8.2pt; text-align: right; color: var(--muted); line-height: 1.5; white-space: nowrap; }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* Verdict banner */
+  .verdict { display: flex; align-items: center; gap: 4mm; margin: 4mm 0 4.5mm;
+             padding: 3mm 4mm; background: var(--band); border-left: 3pt solid var(--accent); }
+  .pills { display: flex; gap: 1.5mm; flex-shrink: 0; }
+  .pill { font-family: var(--mono); font-weight: 500; font-size: 8.4pt; letter-spacing: .06em; color: #fff;
+          padding: 1.2mm 3mm; border-radius: 10pt; }
+  .pill.go { background: var(--go); } .pill.delegate { background: var(--delegate); } .pill.decline { background: var(--decline); }
+  .verdict-text { flex: 1; }
+  .verdict-text b { display: block; font-size: 10.4pt; }
+  .score { font-family: var(--mono); font-size: 17pt; font-weight: 500; color: var(--accent); flex-shrink: 0; }
+  .score small { font-size: 9pt; color: var(--muted); }
+
+  /* Columns */
+  .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 7mm; }
+  h2 { font-family: var(--mono); font-weight: 500; font-size: 7.4pt; letter-spacing: .1em; text-transform: uppercase;
+       color: var(--accent); margin: 0 0 1.4mm; padding-bottom: .8mm; border-bottom: .6pt solid var(--rule); }
+  section { margin-bottom: 3.6mm; }
+  p { margin: 0; }
+  ul { margin: 0; padding-left: 3.6mm; }
+  li { margin-bottom: .9mm; }
+  li::marker { color: var(--accent); }
+
+  /* Claim tags */
+  .tag { font-family: var(--mono); font-size: 6.2pt; letter-spacing: .04em; padding: .2mm 1.1mm; border-radius: 2pt;
+         vertical-align: 1pt; white-space: nowrap; }
+  .tag.verified { background: #e3f1eb; color: var(--go); }
+  .tag.third { background: #e8ebf0; color: #3f4854; }
+  .tag.self { background: #f7ecd8; color: var(--delegate); }
+
+  /* Score table */
+  table.scores { width: 100%; border-collapse: collapse; }
+  table.scores td { padding: 1.2mm 0; border-bottom: .5pt solid var(--rule); vertical-align: middle; }
+  td.crit { font-weight: 600; font-size: 8.8pt; }
+  td.crit small { display: block; font-weight: 400; font-size: 7.8pt; color: var(--muted); line-height: 1.3; }
+  td.bar { width: 18mm; padding-left: 2mm !important; }
+  td.bar span { display: block; height: 2.2pt; background: var(--accent); border-radius: 1pt; }
+  td.bar { background-image: linear-gradient(var(--rule), var(--rule)); background-size: calc(100% - 2mm) 2.2pt;
+           background-position: right center; background-repeat: no-repeat; }
+  td.num { font-family: var(--mono); font-size: 8.4pt; text-align: right; width: 12mm; }
+
+  /* Meeting prep */
+  .prep { background: var(--band); padding: 3mm 4mm 2.6mm; margin: .5mm 0 3.5mm; }
+  .prep ol { columns: 2; column-gap: 7mm; margin: 0; padding-left: 4.2mm; }
+  .prep li { break-inside: avoid; }
+  .prep li::marker { font-family: var(--mono); font-size: 8pt; }
+  .dont { margin-top: 1.8mm; font-size: 8.8pt; }
+  .dont b { color: var(--decline); }
+
+  /* Footer */
+  footer { border-top: .6pt solid var(--rule); padding-top: 1.6mm; font-family: var(--mono); font-size: 6.6pt;
+           color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="eyebrow">{{eyebrow}}</div>
+    <h1>{{company}}: <span class="person">{{person}}</span></h1>
+  </div>
+  <div class="meta">
+    <b>{{date}}</b><br>
+    Goal: {{goal}}<br>
+    Agenda: {{agenda}}<br>
+    Also attending: {{attendees}}
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="pills">{{verdict_pills}}</div>
+  <div class="verdict-text"><b>{{verdict_line}}</b>{{verdict_sentence}}</div>
+  <div class="score">{{score}}<small>/100</small></div>
+</div>
+
+<div class="cols">
+  <div>
+    <section><h2>The ask</h2><ul>{{the_ask}}</ul></section>
+    <section><h2>Who they are</h2><ul>{{who_they_are}}</ul></section>
+    <section><h2>Who's in the room</h2><ul>{{in_the_room}}</ul></section>
+    <section><h2>History &amp; fit</h2><ul>{{history_fit}}</ul></section>
+  </div>
+  <div>
+    <section><h2>Score</h2><table class="scores">{{score_rows}}</table></section>
+    <section><h2>Watch-outs</h2><ul>{{watch_outs}}</ul></section>
+  </div>
+</div>
+
+<section class="prep">
+  <h2>Meeting prep · {{goal}}</h2>
+  <ol>{{prep_items}}</ol>
+  <div class="dont"><b>Don't commit to:</b> {{dont_commit}}</div>
+</section>
+
+<footer>
+  Sources: {{sources}}<br>
+  History check: {{history_status}}
+</footer>
+
+</body>
+</html>
