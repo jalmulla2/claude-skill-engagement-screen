@@ -1,6 +1,6 @@
-# engagement-screen
+# Engagement Screen — Claude Skill
 
-A Claude skill that vets requests for your time — vendor meeting requests, event invitations, speaking slots, paper and journal invitations — before you say yes.
+A [Claude skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) that vets requests for your time — vendor meeting requests, event invitations, speaking slots, paper and journal invitations — before you say yes.
 
 - **Researches** the company or organiser and the person: what they sell, whether they can deliver locally, who they really work for, and whether the event or journal is legitimate.
 - **Decides**: a Go / Delegate / Decline verdict with a score out of 100, plus hard gates for predatory journals, pay-to-speak, sanctions and live procurements.
@@ -12,13 +12,13 @@ The sample above is for a fictional vendor, Northwind Analytics ([PDF](examples/
 
 ## Install
 
-**Claude Code:** copy the folder into your skills directory.
+**Claude Code:** clone it into your skills directory.
 
 ```bash
-cp -r engagement-screen ~/.claude/skills/
+git clone https://github.com/jalmulla2/claude-skill-engagement-screen.git ~/.claude/skills/engagement-screen
 ```
 
-**Claude apps:** zip the `engagement-screen` folder and upload it as a skill under Settings → Capabilities → Skills.
+**Claude apps:** download the repo, name the folder `engagement-screen`, zip it and upload it as a skill under Settings → Capabilities → Skills.
 
 ## Configure me
 
