@@ -32,11 +32,13 @@ def render(html_path: Path, pdf_path: Path) -> None:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        sys.exit(
+        print(
             "playwright is not installed. Run:\n"
             "  pip install playwright\n"
-            "  python3 -m playwright install chromium"
+            "  python3 -m playwright install chromium",
+            file=sys.stderr,
         )
+        sys.exit(2)  # usage/setup error, not a page-count failure
 
     with sync_playwright() as p:
         browser = p.chromium.launch()

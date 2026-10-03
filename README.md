@@ -22,17 +22,22 @@ git clone https://github.com/jalmulla2/claude-skill-engagement-screen.git ~/.cla
 
 ## Configure me
 
-Open `SKILL.md` and fill in the **Configure me** block at the top. The rest of the skill reads from it:
+Open `SKILL.md` and fill in the **Configure me** block at the top, or leave `SKILL.md` untouched and put your values in a `personal.md` next to it (the skill reads `personal.md` first and it overrides the defaults; keep it out of any public fork). The rest of the skill reads from these fields:
 
 | Field | What to put |
 |---|---|
 | `ROLES` | The hats you evaluate requests through, e.g. "Head of IT at <org>", "University lecturer". Anything outside these gets a one-line "out of scope". |
 | `DELEGATION_MAP` | Work area → person or team to delegate to. |
+| `OUT_OF_SCOPE` | Hats or side businesses the skill should not screen for. |
 | `ACTIVE_PROCUREMENTS` | Open or upcoming tenders, and the kinds of vendor likely to bid. Drives the procurement gate. |
+| `STRATEGIC_PRIORITIES` | Platforms, ecosystems or sectors that make a vendor or event strategically valuable. |
+| `HOME_BASE` | Your city; cost-and-time scoring gives full marks to free, local, half-day events. |
 | `LIVE_PROJECTS_SOURCE` | Where your current projects are listed. |
 | `HISTORY_SOURCES` | Where to look for past contact: notes folder, CRM, mailbox connector. |
 | `OUTPUT_FOLDER` | Where PDFs and notes are saved. |
+| `PEOPLE_NOTES` | Folder for person notes, or empty to skip. |
 | `ACCENT_COLOR` | Brand colour for the PDF (default `#1F4E79`). |
+| `REPLY_STYLE` | How reply drafts should read, if you ask for one. Replies are always drafts. |
 
 ## Example prompts
 
